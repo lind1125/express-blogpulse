@@ -2,3 +2,12 @@
   width: 100%;
   height: auto;
 }
+
+.comment {
+  background-color: lightgray;
+}
+
+#comment-name {
+  font-style: italic;
+  font-size: 1.2em;
+}
