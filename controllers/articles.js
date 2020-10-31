@@ -2,6 +2,8 @@ let express = require('express')
 let db = require('../models')
 let router = express.Router()
 
+
+
 // POST /articles - create a new post
 router.post('/', (req, res) => {
   db.article.create({
@@ -27,6 +29,24 @@ router.get('/new', (req, res) => {
     res.status(400).render('main/404')
   })
 })
+// POST /articles/:id - create new comments associated with an article
+router.post('/:id/comments', (req, res) => {
+  let parameter = req.params.id
+  db.comment.create({
+    name: req.body.name,
+    content: req.body.content,
+    articleId: parseInt(parameter)
+  })
+  .then((post) => {
+    res.redirect('/articles/'+req.params.id)
+    console.log(req.body)
+  })
+  .catch(err=>{
+    console.log('Here\'s the problem:', err)
+    console.log(req.params)
+
+  })
+})
 
 // GET /articles/:id - display a specific post and its author
 router.get('/:id', (req, res) => {
@@ -36,8 +56,6 @@ router.get('/:id', (req, res) => {
   })
   .then((article) => {
     if (!article) throw Error()
-    console.log(article.author)
-    console.log(article.comments)
     res.render('articles/show', { article: article })
   })
   .catch((error) => {

@@ -11,10 +11,10 @@
       <div class="well">
         <h2>
           <a href="/articles/<%= a.id %>"><%= a.title %></a>
-          <small>by <%= a.author.getFullName() %></small>
         </h2>
+        <br>
         <p>
-          <strong><%= moment(a.createdAt).calendar() %></strong>
+          <strong><%= a.author.getFullName() %></strong> &mdash; <%= moment(a.createdAt).format('MMM Do YYYY') %>
         </p>
       </div>
     <% }) %>

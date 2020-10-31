@@ -1,19 +1,35 @@
-<h1><%= article.title %> <small>by <%= article.author.getFullName() %></small></h1>
-
-<p>
-  <strong><%= moment(article.createdAt).calendar() %></strong>
-</p>
-
+<h1><%= article.title %> </h1>
+<h5> 
+  <%= article.author.getFullName() %> &mdash; <%= moment(article.createdAt).format('MMMM Do YYYY, h:mm a') %>
+</h5>
+<hr />
 <p><%= article.content %></p>
 
 <hr />
-
+<div id="comment-container">
 <% article.comments.forEach(function(comment, i) { %>
   <div class="comment">
     <p id=comment-name><%= article.comments[i].name %> says:</p>
     <p><%= article.comments[i].content %></p>
 
   </div>
-<% }) %>
+  <% }) %>
+</div>
+<hr />
+<h4>Join the discussion</h4>
+<form action="/articles/<%= article.id %>/comments" method="POST">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
 
+  <div class="form-group">
+    <label for="content">Comment</label>
+    <textarea type="text" class="form-control" id="content" name="content" required></textarea>
+  </div>
+
+  <input type="submit" class="btn btn-primary">
+
+</form>
+<br>
 <a href="/">&larr; Back Home</a>
